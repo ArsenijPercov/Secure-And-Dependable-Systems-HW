@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -rdynamic CMakeFiles/pnmhide.dir/pnmhide.c.o CMakeFiles/pnmhide.dir/image.c.o CMakeFiles/pnmhide.dir/hide.c.o  -o pnmhide  -lnetpbm 

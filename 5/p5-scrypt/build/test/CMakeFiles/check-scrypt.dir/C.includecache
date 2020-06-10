@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/scrypt.h
+stdint.h
+-
+
+/home/apercov/Documents/Secure and Dependable Systems/5/p5-scrypt/test/check-scrypt.c
+stdlib.h
+-
+stdio.h
+-
+check.h
+-
+scrypt.h
+/home/apercov/Documents/Secure and Dependable Systems/5/p5-scrypt/test/scrypt.h
+

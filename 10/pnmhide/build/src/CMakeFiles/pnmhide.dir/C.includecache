@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/apercov/Documents/Secure_and_Dependable_Systems/10/pnmhide/src/hide.c
+hide.h
+/home/apercov/Documents/Secure_and_Dependable_Systems/10/pnmhide/src/hide.h
+
+/home/apercov/Documents/Secure_and_Dependable_Systems/10/pnmhide/src/hide.h
+image.h
+/home/apercov/Documents/Secure_and_Dependable_Systems/10/pnmhide/src/image.h
+
+/home/apercov/Documents/Secure_and_Dependable_Systems/10/pnmhide/src/image.h
+pnm.h
+-
+netpbm/pnm.h
+-
+

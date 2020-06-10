@@ -1,0 +1,152 @@
+\documentclass[a4paper]{article}
+\usepackage[pdftex]{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{ifthen}
+\usepackage{listings}
+% move the asterisk at the right position
+\lstset{basicstyle=\ttfamily,tabsize=4,literate={*}{${}^*{}$}1}
+%\lstset{language=C,basicstyle=\ttfamily}
+\usepackage{moreverb}
+\usepackage{palatino}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes.gates.logic.US,shapes.gates.logic.IEC,calc}
+
+\usepackage[left=2cm, right=2cm, top=4cm, bottom=4cm]{geometry}
+
+\usepackage{graphicx}
+%% pdflatex?
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+\pdffalse % we are not running PDFLaTeX
+\else
+\pdfoutput=1 % we are running PDFLaTeX
+\pdftrue
+\fi
+
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\parindent=0cm
+\parskip=0cm
+
+\setlength{\columnseprule}{0.4pt}
+\addtolength{\columnsep}{2pt}
+
+\addtolength{\textheight}{5.5cm}
+\addtolength{\topmargin}{-26mm}
+\pagestyle{empty}
+
+%%
+%% Sheet setup
+%% 
+\newcommand{\coursename}{Secure and Dependable Systems}
+
+ 
+\newcommand{\sheettitle}{Problem Sheet}
+\newcommand{\mytitle}{}
+\newcommand{\mytoday}{March 22, 2020}
+
+% Current Assignment number
+\newcounter{assignmentno}
+\setcounter{assignmentno}{4}
+
+% Current Problem number, should always start at 1
+\newcounter{problemno}
+\setcounter{problemno}{1}
+
+%%
+%% problem and bonus environment
+%%
+\newcounter{probcalc}
+\newcommand{\problem}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Problem \arabic{assignmentno}.\arabic{problemno}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+\newcommand{\bonus}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Bonus Problem \textcolor{blue}{\arabic{assignmentno}}.\textcolor{blue}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+%% some counters  
+\newcommand{\assignment}{\arabic{assignmentno}}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+%% solution  
+\newcommand{\solution}{\pagebreak[2]{\bf Solution:}\\}
+
+%% Hyperref Setup
+\hypersetup{pdftitle={Homework \assignment},
+  pdfsubject={\coursename},
+  pdfauthor={},
+  pdfcreator={},
+  pdfkeywords={Computer Networks},
+  %  pdfpagemode={FullScreen},
+  %colorlinks=true,
+  %bookmarks=true,
+  %hyperindex=true,
+  bookmarksopen=false,
+  bookmarksnumbered=true,
+  breaklinks=true,
+  %urlcolor=darkblue
+  urlbordercolor={0 0 0.7}
+}
+
+\begin{document}
+\coursename \hfill 
+Jacobs University Bremen \hfill \mytoday\\
+Arsenij Percov\hfill
+\vspace*{0.3cm}\\
+\begin{center}
+{\Large \sheettitle{} \assignment\\}
+\end{center}
+
+
+\problem{}{0}
+\solution\\
+\begin{verbatim}
+Dump of assembler code for function foo:
+0x0000555555555125 <+0>: push %rbp \\push the address of the base pointer to the stack to retain it later
+0x0000555555555126 <+1>: mov %rsp,%rbp \\ make rbp point to the top of the stack
+0x0000555555555129 <+4>: mov %edi,-0x14(%rbp)\\store %edi at address that is 20 bytes less than base pointer
+0x000055555555512c <+7>: movl $0x0,-0x8(%rbp)\\ store 0 at rbp - 8 (allocating of local variable(in this case r = 0), and assignment of value to it)
+0x0000555555555133 <+14>: movl $0x1,-0x4(%rbp)\\ store 1 at rbp - 4 (allocating of local variable(in this case i=1), and assignment of value to it)
+0x000055555555513a <+21>: jmp 0x555555555146 <foo+33>\\jump to address provided as argument (skips initial leap of the for loop)
+0x000055555555513c <+23>: mov -0x4(%rbp),%eax \\ load value of rbp - 4 to eax (in our case it is i)
+0x000055555555513f <+26>: add %eax,-0x8(%rbp)\\ add value store in eax (i) to value at address rbp - 8 (r), and store it at r
+0x0000555555555142 <+29>: addl $0x1,-0x4(%rbp)\\add 1 to value stored in rbp-4 (i)
+0x0000555555555146 <+33>: mov -0x4(%rbp),%eax \\ load value of rbp  - 4(i) to eax
+0x0000555555555149 <+36>: cmp -0x14(%rbp),%eax \\ compare whether rbp - 20 (a) is equal to eax (i), if no execute next line.
+0x000055555555514c <+39>: jle 0x55555555513c <foo+23>\\ jump to the address, jump to the beginning of loop
+0x000055555555514e <+41>: mov -0x8(%rbp),%eax \\move value store rbp - 8 (r) to eax , saving it to pass it back to caller
+0x0000555555555151 <+44>: pop %rbp \\pop base pointer from stack 
+0x0000555555555152 <+45>: retq\\return to the caller
+\end{verbatim}\\
+b)
+\\
+\begin{verbatim}
+return address
+rbp
+
+\end{verbatim}
+\end{document}

@@ -1,0 +1,282 @@
+\documentclass[a4paper]{article}
+\usepackage[pdftex]{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{ifthen}
+\usepackage{listings}
+% move the asterisk at the right position
+\lstset{basicstyle=\ttfamily,tabsize=4,literate={*}{${}^*{}$}1}
+%\lstset{language=C,basicstyle=\ttfamily}
+\usepackage{moreverb}
+\usepackage{palatino}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes.gates.logic.US,shapes.gates.logic.IEC,calc}
+
+\usepackage[left=2cm, right=2cm, top=4cm, bottom=4cm]{geometry}
+
+\usepackage{graphicx}
+%% pdflatex?
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+\pdffalse % we are not running PDFLaTeX
+\else
+\pdfoutput=1 % we are running PDFLaTeX
+\pdftrue
+\fi
+
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\parindent=0cm
+\parskip=0cm
+
+\setlength{\columnseprule}{0.4pt}
+\addtolength{\columnsep}{2pt}
+
+\addtolength{\textheight}{5.5cm}
+\addtolength{\topmargin}{-26mm}
+\pagestyle{empty}
+
+%%
+%% Sheet setup
+%% 
+\newcommand{\coursename}{Secure and Dependable Systems}
+
+ 
+\newcommand{\sheettitle}{Problem Sheet}
+\newcommand{\mytitle}{}
+\newcommand{\mytoday}{March 11, 2020}
+
+% Current Assignment number
+\newcounter{assignmentno}
+\setcounter{assignmentno}{3}
+
+% Current Problem number, should always start at 1
+\newcounter{problemno}
+\setcounter{problemno}{1}
+
+%%
+%% problem and bonus environment
+%%
+\newcounter{probcalc}
+\newcommand{\problem}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Problem \arabic{assignmentno}.\arabic{problemno}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+\newcommand{\bonus}[2]{
+  \pagebreak[2]
+  \setcounter{probcalc}{#2}
+  ~\\
+  {\large \textbf{Bonus Problem \textcolor{blue}{\arabic{assignmentno}}.\textcolor{blue}{\arabic{problemno}}} \hspace{0.2cm}\textit{#1}} \refstepcounter{problemno}\vspace{2pt}\\}
+
+%% some counters  
+\newcommand{\assignment}{\arabic{assignmentno}}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+%% solution  
+\newcommand{\solution}{\pagebreak[2]{\bf Solution:}\\}
+
+%% Hyperref Setup
+\hypersetup{pdftitle={Homework \assignment},
+  pdfsubject={\coursename},
+  pdfauthor={},
+  pdfcreator={},
+  pdfkeywords={Computer Networks},
+  %  pdfpagemode={FullScreen},
+  %colorlinks=true,
+  %bookmarks=true,
+  %hyperindex=true,
+  bookmarksopen=false,
+  bookmarksnumbered=true,
+  breaklinks=true,
+  %urlcolor=darkblue
+  urlbordercolor={0 0 0.7}
+}
+
+\begin{document}
+\coursename \hfill 
+Jacobs University Bremen \hfill \mytoday\\
+Arsenij Percov\hfill
+\vspace*{0.3cm}\\
+\begin{center}
+{\Large \sheettitle{} \assignment\\}
+\end{center}
+\problem{}{0}
+\solution\\
+a,b)\\
+\begin{lstlisting}	
+Precondition: {X = x AND N = n AND N >= 0}	
+	K:=N
+	P:=X
+	Y:=1
+	WHILE K > 0 DO
+		IF (K%2) = 0 THEN
+			P:=P*P
+			K:=K/2
+		ELSE
+			Y:=Y*P
+			K:=K-1
+		FI
+	OD
+Postcondition: {Y = x^n}
+\end{lstlisting}
+c)\\
+\begin{lstlisting}	
+Precondition: {X = x AND N = n AND N >= 0}	
+	K:=N
+	P:=X
+	Y:=1
+	{K = N AND P = X AND Y = 1} 
+	WHILE K > 0 DO
+	{Y*P^K = x^n} 
+		IF (K%2) = 0 THEN
+			P:=P*P
+			K:=K/2
+		ELSE
+			Y:=Y*P
+			K:=K-1
+		FI
+	OD
+Postcondition: {Y = x^n}
+\end{lstlisting}
+ d)\\
+ \begin{lstlisting}	
+1st condition:
+{X = x AND N = n AND N >= 0}K:=N;P:=X;Y:=1;{K = N AND P = X AND Y = 1} 
+{X = x AND N = n AND N >= 0}K:=N;P:=X;{K = N AND P = X AND 1 = 1} 
+{X = x AND N = n AND N >= 0}K:=N;{K = N AND X = X AND 1 = 1} 
+{X = x AND N = n AND N >= 0}{N = N AND X = X AND 1 = 1} 
+
+while loop:
+{K = N AND X = X AND Y = 1}->{Y*P^K = x^n} 
+{Y*P^K = x^n AND NOT (K > 0)}->{Y = x^n}
+
+{Y*P^K = x^n AND (K > 0)}IF (K%2) = 0 THEN P:=P*P;K:=K/2; ELSE Y:=Y*P;K:=K-1;FI {Y*P^K = x^n AND (K > 0)}
+
+Decompose IF 
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0}P:=P*P;K:=K/2;{Y*P^K = x^n}
+{Y*P^K = x^n AND (K > 0) AND (K%2) != 0}Y:=Y*P;K:=K-1;{Y*P^K = x^n}
+
+Simplify Then branch
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0}P:=P*P;K:=K/2;{Y*P^K = x^n}
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0}P:=P*P;{Y*P^(K/2) = x^n}
+=
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0}->{Y*(P*P)^(K/2) = x^n}
+
+Simplify Else branch
+{Y*P^K = x^n AND (K > 0) AND (K%2) != 0}Y:=Y*P;K:=K-1;{Y*P^K = x^n}
+=
+{Y*P^K = x^n AND (K > 0) AND (K%2) != 0}{Y*P*P^(K-1) = x^n}
+\end{lstlisting}
+
+e)\\
+\begin{lstlisting}	
+{X = x AND N = n AND N >= 0}{N = N AND X = X AND 1 = 1} => (tautology)
+{X = x AND N = n AND N >= 0}{1}Proved.
+
+{K = N AND P = X AND Y = 1}->{Y*P^K = x^n} => (Since Y=1)
+{K = N AND P = X AND Y = 1}->{P^K = x^n} => (Since K=N, P=X)
+{K = N AND X = X AND Y = 1}->{X^N = x^n}=> (Since X=x, N=n)
+{K = N AND X = X AND Y = 1}->{X^N = X^N} Proved.
+
+{Y*P^K = x^n AND NOT (K > 0)}->{Y = x^n} => (If NOT K > 0, then k = 0, since only two changes we do to it in the code are division by two, and subtruction of 1. Any positive number divided by positive number will give positive number. Subtruction by 1, even in case if k = 1, then k-1 would be 0, and the loop would terminate. Even numbers would get divided by 2, until reached odd number.) => (K=0) =>
+{Y*P^0 = x^n AND NOT (0 > 0)}->{Y = x^n} => (NOT (0>0) evaluates to 1, P^0 = 1)
+=>
+{Y*1 = x^n}->{Y = x^n} Proved.
+
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0}->{Y*(P*P)^(K/2) = x^n} =>
+Y*P^K = Y*P*P^(K/2) (prove this, since everything else is not contradicting or in question)=>
+P^K = P*P^(K/2) => P^K = (P^2)^(K/2) => P^K = (P)^(2*K/2) => P^K = P^K. Proved.
+
+{Y*P^K = x^n AND (K > 0) AND (K%2) != 0}{Y*P*P^(K-1) = x^n}
+Y*P^K = Y*P*P^(K-1) => P^K = P*P^(K-1) = > P^K = P^K Proved.
+
+
+\end{lstlisting}	
+f)\\
+\begin{lstlisting}	
+Precondition: {X = x AND N = n AND N >= 0}	
+	K:=N
+	P:=X
+	Y:=1
+	{K = N AND P = X AND Y = 1} 
+	WHILE K > 0 DO
+	{Y*P^K = x^n} 
+	[K]
+		IF (K%2) = 0 THEN
+			P:=P*P
+			K:=K/2
+		ELSE
+			Y:=Y*P
+			K:=K-1
+		FI
+	OD
+Postcondition: {Y = x^n}
+\end{lstlisting}
+g)\\
+\begin{lstlisting}	
+Conditions from before:
+	{X = x AND N = n AND N >= 0}{N = N AND X = X AND 1 = 1} 
+
+	while loop:
+	{K = N AND X = X AND Y = 1}->{Y*P^K = x^n} 
+	{Y*P^K = x^n AND NOT (K > 0)}->{Y = x^n}
+	
+	
+We need to add new rules for while loop:
+{Y*P^K = x^n AND (K > 0)}->K>=0
+
+{Y*P^K = x^n AND (K > 0) AND (K = n2)}IF (K%2) = 0 THEN P:=P*P;K:=K/2; ELSE Y:=Y*P;K:=K-1;FI {Y*P^K = x^n AND (K > 0) AND (K<n2)}
+
+Decompose IF 
+{Y*P^K = x^n AND (K > 0) AND (K = n2) AND (K%2) = 0}P:=P*P;K:=K/2;{Y*P^K = x^n AND (K<n2)}
+{Y*P^K = x^n AND (K > 0) AND (K = n2) AND (K%2) != 0}Y:=Y*P;K:=K-1;{Y*P^K = x^n AND (K<n2)}
+
+Simplify Then branch
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0 AND (K = n2)}P:=P*P;K:=K/2;{Y*P^K = x^n AND (K<n2)}
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0 AND (K = n2)}P:=P*P;{Y*P^(K/2) = x^n AND (K/2<n2)}
+=
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0 AND (K = n2)}->{Y*(P*P)^(K/2) = x^n AND (K/2<n2)}
+
+Simplify Else branch
+{Y*P^K = x^n AND (K > 0) AND (K%2) != 0  AND (K = n2)}Y:=Y*P;K:=K-1;{Y*P^K = x^n}
+=
+{Y*P^K = x^n AND (K > 0) AND (K%2) != 0  AND (K = n2)}{Y*P*P^(K-1) = x^n AND (K-1<n2)}
+\end{lstlisting}
+
+h)\\
+\begin{lstlisting}	
+Proofs for first 3 conditions are same as before. 
+
+{Y*P^K = x^n AND (K > 0)}->K>=0 - If K>0 then K>=0. Proved
+
+{Y*P^K = x^n AND (K > 0) AND (K%2) = 0 AND (K = n2)}->{Y*(P*P)^(K/2) = x^n AND (K/2<n2)}.
+Prove only (K = n2) -> (K/2<n2) since other parts are already proven.
+(K = n2 ) -> (n2/2<n2) -> 1/2 <2. Proved.
+
+{Y*P^K = x^n AND (K > 0) AND (K%2) != 0  AND (K = n2)}{Y*P*P^(K-1) = x^n AND (K-1<n2)}
+Prove only (K = n2) -> (K-1<n2) since other parts are already proven.
+(K = n2 ) -> (n2-1<n2) -> -1 <0. Proved.
+
+
+\end{lstlisting}
+\end{document}

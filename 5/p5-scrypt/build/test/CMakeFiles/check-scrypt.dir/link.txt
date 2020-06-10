@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -rdynamic CMakeFiles/check-scrypt.dir/check-scrypt.c.o  -o check-scrypt  ../src/libscrypt.a -lcheck_pic -lrt -lm -lsubunit -lpthread 

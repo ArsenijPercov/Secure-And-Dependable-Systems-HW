@@ -1,0 +1,2 @@
+/usr/bin/ar qc libscrypt.a  CMakeFiles/scrypt.dir/scrypt.c.o
+/usr/bin/ranlib libscrypt.a
